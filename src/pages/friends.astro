@@ -1,0 +1,51 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Main from "@/layouts/Main.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { friends } from "@/data/friends";
+import { SITE } from "@/config";
+---
+
+<Layout title={`Friends | ${SITE.title}`}>
+  <Header />
+  <Main pageTitle="Friends" pageDesc="My friends and recommended websites.">
+    <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      {
+        friends.map(friend => (
+          <li class="border border-border rounded-xl p-4 transition-colors hover:border-accent">
+            <a
+              href={friend.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group flex items-start gap-3"
+            >
+              {friend.avatar ? (
+                <img
+                  src={friend.avatar}
+                  alt={friend.name}
+                  class="size-12 rounded-full border border-border object-cover"
+                />
+              ) : (
+                <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-muted text-xl font-bold text-accent">
+                  {friend.name.charAt(0)}
+                </div>
+              )}
+              <div class="min-w-0 flex-1">
+                <h2 class="text-lg font-medium text-accent decoration-dashed underline-offset-4 group-hover:underline">
+                  {friend.name}
+                </h2>
+                {friend.description && (
+                  <p class="mt-1 line-clamp-2 text-sm opacity-80">
+                    {friend.description}
+                  </p>
+                )}
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </Main>
+  <Footer />
+</Layout>
